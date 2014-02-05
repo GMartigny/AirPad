@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <canvas width="800" height="600" id="can"></canvas>
+        <script>
+            var can = document.getElementById("can"),
+                ctx = can.getContext("2d"),
+                ply;
+            
+            function start(){
+                ply = new Player();
+                draw();
+            }
+            start();
+            
+            function draw(){
+                ctx.clearRect(0, 0, can.width, can.height);
+                ply.render();
+            }
+            
+            function Player(){
+                this.pos = {
+                    x: can.width,
+                    y: can.height
+                };
+                this.dir = 2;
+                this.img = new Image("perso.png");
+                
+                this.render = function(){
+                    ctx.drawImage(ply.img, this.anim*32, this.dir*32, 32, 32, this.pos.x, this.pos.y, 32, 32);
+                };
+                this.move = function(){
+                    
+                };
+            }
+            
+            function Image(src){
+                var i = document.createElement("img");
+                i.src = src;
+                return i;
+            }
+            
+            window.onkeydown = function(ev){
+                console.log(ev.keyCode);
+            }
+        </script>
+    </body>
+</html>
