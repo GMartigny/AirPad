@@ -1,43 +1,101 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Simple Avoid the Spick</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
         <canvas width="800" height="600" id="can"></canvas>
+        <div id="airpad">
+            <h2>You can play with your SmartPhone !!</h2>
+            <img id="qr-code" />
+        </div>
         <script>
             var can = document.getElementById("can"),
                 ctx = can.getContext("2d"),
-                ply;
+                ply,
+                flash = new Image("flash.png"),
+                spicks = [],
+                PI = Math.PI;
             
             function start(){
                 ply = new Player();
+                ctx.fillStyle = '#666';
                 draw();
             }
             start();
             
             function draw(){
+                window.requestAnimationFrame(draw);
                 ctx.clearRect(0, 0, can.width, can.height);
+                
+                ctx.drawImage(flash, 0, can.height-40);
+                ctx.globalAlpha = 0.9;
+                ctx.beginPath();
+                ctx.moveTo(20, can.height-20);
+                ctx.lineTo(20, can.height-40);
+                ctx.arc(20, can.height-20, 20, -PI/2, ((PI*2)*(ply.cldw/200))-PI/2, false);
+                ctx.lineTo(20, can.height-20);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                
                 ply.render();
             }
             
             function Player(){
                 this.pos = {
-                    x: can.width,
-                    y: can.height
+                    x: can.width/2<<0,
+                    y: can.height/2<<0
                 };
+                this.vit = 2;
                 this.dir = 2;
+                this.anim = 1;
+                this.mv = false;
+                this.cldw = 0;
                 this.img = new Image("perso.png");
                 
                 this.render = function(){
-                    ctx.drawImage(ply.img, this.anim*32, this.dir*32, 32, 32, this.pos.x, this.pos.y, 32, 32);
+                    if(this.cldw > 0) --this.cldw;
+                    if(this.mv) this.move(this.vit);
+                    ctx.drawImage(ply.img, (this.anim<<0)*32, this.dir*32, 32, 32, this.pos.x, this.pos.y, 32, 32);
+                };
+                this.move = function(v){
+                    switch(this.dir){
+                        case 0:
+                            this.pos.y-=v;
+                            break;
+                        case 1:
+                            this.pos.x+=v;
+                            break;
+                        case 2:
+                            this.pos.y+=v;
+                            break;
+                        case 3:
+                            this.pos.x-=v;
+                            break;
+                    }
+                };
+                this.flash = function(){
+                    if(this.cldw <= 0){
+                        this.cldw = 200;
+                        this.move(50);
+                    }
+                }
+            }
+            function Spick(pos, vit){
+                this.pos = pos;
+                this.vit = vit;
+                
+                this.render = function(){
+                    this.move();
                 };
                 this.move = function(){
-                    
-                };
+                    this.pos.x += this.vit.x;
+                    this.pos.y += this.vit.y;
+                }
             }
             
             function Image(src){
@@ -46,8 +104,50 @@
                 return i;
             }
             
+            function roll(from, to){
+                
+            }
+            
             window.onkeydown = function(ev){
-                console.log(ev.keyCode);
+                key(ev.keyCode, 1);
+            };
+            window.onkeyup = function(ev){
+                key(ev.keyCode, 0);
+            };
+            function key(code, down){
+                switch(code){
+                    case 32:
+                        ply.flash();
+                        break;
+                    case 38:
+                        if(down){
+                            ply.mv = true;
+                            ply.dir = 0;
+                        }
+                        else if(ply.dir == 0) ply.mv = false;
+                        break;
+                    case 39:
+                        if(down){
+                            ply.mv = true;
+                            ply.dir = 1;
+                        }
+                        else if(ply.dir == 1) ply.mv = false;
+                        break;
+                    case 40:
+                        if(down){
+                            ply.mv = true;
+                            ply.dir = 2;
+                        }
+                        else if(ply.dir == 2) ply.mv = false;
+                        break;
+                    case 37:
+                        if(down){
+                            ply.mv = true;
+                            ply.dir = 3;
+                        }
+                        else if(ply.dir == 3) ply.mv = false;
+                        break;
+                }
             }
         </script>
     </body>
