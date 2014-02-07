@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="style.css"/>
+        <script src="../../Screen side/AirPadReceiver.js"></script>
     </head>
     <body>
         <canvas width="800" height="600" id="can"></canvas>
@@ -24,7 +25,8 @@
                 rand = Math.random,
                 round = Math.round,
                 sqrt = Math.sqrt,
-                pow = Math.pow;
+                pow = Math.pow,
+                receiver = new AirPadReceiver("../../Server Side/app.js", 1337);
             
             function start(){
                 ply = new Player();
