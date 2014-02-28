@@ -9,7 +9,7 @@ body{
     top: calc(50% - 300px);
     left: calc(50% - 400px);
     display: block;
-    background: url(floor.png);
+    background: url(img/floor.png);
     width: 800px;
     margin: 0 auto 0;
     box-shadow: 0 0 20px #666;

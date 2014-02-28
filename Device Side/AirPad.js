@@ -8,4 +8,22 @@ function AirPad(serverURL, port){
     this.socket.onmessage = this.onmessage;
     this.socket.onerror = this.onerror;
     this.socket.onclose = this.onclose;
+    
+    window.AP = this;
+    window.onload = function(){
+        window.buttons = document.getElementsByTagName("button");
+        for(var i=0;i<buttons.length;++i){
+            buttons[i].onclick = function(){
+                window.AP.send("cmd", this.value);
+            };
+        }
+    };
+    
+    this.send = function(t, v){
+        var data = JSON.stringify({
+            type: t,
+            value: v
+        });
+        this.socket.send(data);
+    };
 }

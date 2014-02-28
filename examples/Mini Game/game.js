@@ -1,7 +1,7 @@
 var ply,
-    flash = new Image("flash.png"),
-    blade = new Image("blade.png"),
-    blood = new Image("blood.png"),
+    flash = new Image("img/flash.png"),
+    blade = new Image("img/blade.png"),
+    blood = new Image("img/blood.png"),
     blades = [],
     PI = Math.PI,
     rand = Math.random,
@@ -59,7 +59,7 @@ function Player(){
     this.mv = false;
     this.cldw = 0;
     this.clmx = 300;
-    this.img = new Image("perso.png");
+    this.img = new Image("img/perso.png");
 
     this.render = function(){
         if(this.cldw > 0) --this.cldw;
