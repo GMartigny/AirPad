@@ -4,10 +4,95 @@
         <title>What a beautiful slider</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
+        <style>
+            body{
+                margin: 0;
+                font-family: arial, sans-serif;
+            }
+            .carrousel{
+                width: 70%;
+                height: 400px;
+                margin: 50px auto;
+                background-image: url(noise.png);
+            }
+            h1, h2{
+                text-align: center;
+                text-shadow: 1px 1px 2px #666;
+            }
+            .carrousel .text{
+                border: 1px solid #0099ff;
+            }
+            #qr{
+                position: relative;
+                width: 180px;
+                height: 180px;
+                left: 50px;
+            }
+            
+            #loadBar{
+                position: absolute;
+                left: calc(50% - 175px);
+                top: 250px;
+                width: 350px;
+                height: 30px;
+                border: 1px solid #222;
+                border-radius: 10px;
+                background: -webkit-linear-gradient(-50deg, rgba(0,0,0,0) 20%, #222 28%, rgba(0,0,0,0) 36%, #222 44%, rgba(0,0,0,0) 52%);
+                background: -moz-linear-gradient(-50deg, rgba(0,0,0,0) 20%, #222 28%, rgba(0,0,0,0) 36%, #222 44%, rgba(0,0,0,0) 52%);
+                background: linear-gradient(-50deg, rgba(0,0,0,0) 20%, #222 28%, rgba(0,0,0,0) 36%, #222 44%, rgba(0,0,0,0) 52%);
+                -webkit-animation: swift 1s linear infinite;
+                -moz-animation: swift 1s linear infinite;
+                animation: swift 1s linear infinite;
+                transition: all .3s linear;
+                box-shadow: 0 0 10px #666 inset;
+            }
+            @-webkit-keyframes swift{
+                0%{ background-position: 0 0; }
+                to{ background-position: 350px 0; }
+            }
+            @-moz-keyframes swift{
+                0%{ background-position: 0 0; }
+                to{ background-position: 350px 0; }
+            }
+            @keyframes swift{
+                0%{ background-position: 0 0; }
+                to{ background-position: 350px 0; }
+            }
+        </style>
+        <script>
+            function hideLoader(){
+                document.getElementById('loadBar').style.display = 'none';
+            }
+        </script>
+        <link rel="stylesheet" type="text/css" href="slider/carrousel.css"/>
     </head>
     <body>
-        <div class="carroussel">
-            
+        <div class="carrousel" onload="hideLoader()">
+            <div class="text">
+                <h1>Welcome around folks</h1>
+            </div>
+            <img src="http://lorempixel.com/500/200/technics" alt="Intro image"/>
+            <div class="text">
+                <h2>First thing first</h2>
+                <p>Ok, good slideShow we have here but can we ehance it a little bit ?</p>
+                <p>Why not with a little more interaction.</p>
+            </div>
+            <div class="text">
+                <h2>Wooah air control</h2>
+                <p>Scan that Qr-code and take control over it.</p>
+                <img src="" alt="qr-code" id="qr"/>
+            </div>
+            <img src="http://lorempixel.com/600/300" alt="An image"/>
+            <img src="http://lorempixel.com/200/200" alt="Another image"/>
+            <img src="http://lorempixel.com/800/100" alt="An image again"/>
+            <div class="text">
+                <h2>Credits</h2>
+                <p>Thanks <a href="http://lorempixel.com">Lorempixel</a> for the random placeholder images.</p>
+                <p>Don't hesitate to check the <a href="http://github.com/GMartigny/AirPad">AirPad Project</a> for more informations.</p>
+                <p>Slider done with <a href="http://github.com/GMartigny/EasySlider">Easy slider</a>.</p>
+            </div>
         </div>
+        <script src="slider/carrousel.js"></script>
+        <div id="loadBar"></div>
     </body>
 </html>
