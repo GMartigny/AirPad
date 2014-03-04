@@ -1,12 +1,13 @@
-function AirPadReceiver(serverURL, port){
+function AirPadReceiver(serverURL, port, qr){
     port = port || 1337;
     this.socket = new WebSocket("ws://"+serverURL+":"+port);
     
     this.id = 0;
     this.url = location.href+"/controller/";
-    this.qr = new Image();
+    this.qr = qr || new Image();
+    this.qr.onload = this.onload;
     
-    this.verbose = false;
+    this.verbose = true;
     
     this.socket.onopen = this.onopen;
     this.socket.onmessage = this.onmessage;
@@ -23,7 +24,9 @@ function AirPadReceiver(serverURL, port){
             switch (mess.type){
                 case "id":
                     this.id = mess.data;
-                    this.whenLoaded();
+                    this.qr = this.getQR();
+                    break;
+                case "cmd":
                     break;
             }
         }
@@ -48,11 +51,12 @@ function AirPadReceiver(serverURL, port){
         this.log("The controller disconnect");
     };
     
-    this.getQR = function(url){
-        if(id){
-            this.url = url;
-            url = encodeURIComponent(this.url+"?apid="+this.id);
-            this.qr.src = "http://qrickit.com/api/qr?d="+url+"&qrsize=150";
+    this.getQR = function(){
+        if(this.id){
+            if(!this.qr.src){
+                url = encodeURIComponent(this.url+"?apid="+this.id);
+                this.qr.src = "http://qrickit.com/api/qr?d="+url+"&qrsize=150";
+            }
             return this.qr;
         }
         else throw "Not ready";

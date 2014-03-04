@@ -13,17 +13,13 @@
         <div id="help">Move with arrows and use your blink with space.<br/>Click when you're ready !</div>
         <aside id="airpad">
             <h2>You can play with your SmartPhone !!</h2>
-            <img id="qr-code" />
+            <img id="qr-code" src=""/>
         </aside>
         <script>
             // Code for the AirPad
-            var receiver = new AirPadReceiver("heroku.com/app159/", 1337);
+            var receiver = new AirPadReceiver("heroku.com/app159/", 1337, qr);
             receiver.onload = function(){
-                var qrcode = this.getQR();
-                aside.appendChild(qrcode);
-                qrcode.onload = function(){
-                    aside.style.right = "-320px";
-                };
+                aside.style.right = "-320px";
             };
             receiver.onclose = receiver.ondisconnect = function(){
                 help.innerHTML = "Connection with controller lost";
@@ -34,6 +30,7 @@
             
             var help = document.getElementById("help"),
                 aside = document.getElementById("airpad"),
+                qr = document.getElementById("qr-code"),
                 can = document.getElementById("can"),
                 ctx = can.getContext("2d");
             
