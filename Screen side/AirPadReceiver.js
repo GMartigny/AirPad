@@ -27,12 +27,16 @@ function AirPadReceiver(serverURL, port, qr){
                     this.qr = this.getQR();
                     break;
                 case "cmd":
+                    this.oncommand(mess.data);
                     break;
             }
         }
         catch(e){
             throw "Invalid JSON";
         }
+    };
+    this.oncommand = function(data){
+        this.log((data.press? "Press": "Release")+" the button "+data.button);
     };
     this.onload = function(){
         this.log("Ready for scanning");

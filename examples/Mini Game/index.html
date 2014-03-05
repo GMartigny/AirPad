@@ -21,7 +21,10 @@
             receiver.onload = function(){
                 aside.style.right = "-320px";
             };
-            receiver.onclose = receiver.ondisconnect = function(){
+            receiver.oncommande = function(data){
+                key(data.button, data.press);
+            };
+            receiver.onclose = function(){
                 help.innerHTML = "Connection with controller lost";
                 help.style.opacity = 1;
                 aside.style.right = "-320px";

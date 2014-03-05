@@ -143,13 +143,13 @@ window.onkeyup = function(ev){
 };
 function key(code, down){
     switch(code){
-        case 32:
+        case 32: // space
             if(ply.live){
                 if(down) ply.flash();
             }
             else restart();
             break;
-        case 38:
+        case 38: // up
             if(down){
                 ply.mv = true;
                 ply.dir = 0;
@@ -159,7 +159,7 @@ function key(code, down){
                 ply.anim = 0;
             }
             break;
-        case 39:
+        case 39: // right
             if(down){
                 ply.mv = true;
                 ply.dir = 1;
@@ -169,7 +169,7 @@ function key(code, down){
                 ply.anim = 0;
             }
             break;
-        case 40:
+        case 40: // down
             if(down){
                 ply.mv = true;
                 ply.dir = 2;
@@ -179,7 +179,7 @@ function key(code, down){
                 ply.anim = 0;
             }
             break;
-        case 37:
+        case 37: // left
             if(down){
                 ply.mv = true;
                 ply.dir = 3;

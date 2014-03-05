@@ -13,17 +13,20 @@ function AirPad(serverURL, port){
     window.onload = function(){
         window.buttons = document.getElementsByTagName("button");
         for(var i=0;i<buttons.length;++i){
-            buttons[i].onclick = function(){
-                window.AP.send("cmd", this.value);
-            };
+            buttons[i].addEventListener("touchstart", function(){
+                window.AP.send("cmd", {button: this.value, press: true});
+            }, false);
+            buttons[i].addEventListener("touchend", function(){
+                window.AP.send("cmd", {button: this.value, press: false});
+            }, false);
         }
     };
     
-    this.send = function(t, v){
-        var data = JSON.stringify({
+    this.send = function(t, d){
+        var message = JSON.stringify({
             type: t,
-            value: v
+            data: d
         });
-        this.socket.send(data);
+        this.socket.send(message);
     };
 }

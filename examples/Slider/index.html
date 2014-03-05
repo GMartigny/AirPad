@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width">
         <script src="../../Screen side/AirPadReceiver.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
-        <link rel="stylesheet" type="text/css" href="slider/carrousel.css"/>
+        <link rel="stylesheet" type="text/css" href="carrousel/carrousel.css"/>
     </head>
     <body>
-        <div class="carrousel" onload="hideLoader()">
+        <div id="carrousel" onload="hideLoader()">
             <div class="text">
                 <h1>Welcome around folks</h1>
             </div>
@@ -36,21 +36,24 @@
             </div>
         </div>
         <div id="loadBar"></div>
-        <script src="slider/carrousel.js"></script>
+        <script src="carrousel/carrousel.js"></script>
         <script>
             // Code for the AirPad
-            var qr = document.getElementById('qr');
+            var qr = document.getElementById("qr");
             var receiver = new AirPadReceiver("test", 1337, qr);
-            
-            receiver.onload = function(){
-                
-            };
-            receiver.onclose = function(){
+            var carrousel = es_setCarrousel(document.getElementById("carrousel"));
+            receiver.oncommand = function(data){
+                if(data.press){
+                    if(data.button == "left")
+                        carrousel.previous();
+                    else if(data.button == "right")
+                        carrousel.next();
+                }
             };
             // end
             
             function hideLoader(){
-                document.getElementById('loadBar').style.display = 'none';
+                document.getElementById("loadBar").style.display = "none";
             }
         </script>
     </body>

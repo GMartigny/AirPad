@@ -5,7 +5,7 @@ var es_canBeLoaded = {IMG:1, AUDIO:1, VIDEO:1};
 function es_init(){
 	var cs = document.getElementsByClassName("carrousel");
 	for(var i=0;i<cs.length;++i){
-		es_setCarrousel(cs[i]);
+		es_allCarrousel.push(es_setCarrousel(cs[i]));
 	}
 }
 // set a single carrousel
@@ -19,10 +19,9 @@ function es_setCarrousel(elem){
 	for (var j=0;j<l;++j) {
 		car.append(chs[0]);
 	}
-
-	es_allCarrousel.push(car);
+    return car;
 }
-es_init();
+//es_init();
 
 // pseudo-object
 function Carrousel(elem){
