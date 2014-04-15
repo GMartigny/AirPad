@@ -1,10 +1,24 @@
-function AirPadReceiver(serverURL, port, qr){
-    port = port || 1337;
-    this.socket = new WebSocket("ws://"+serverURL+":"+port);
+function AirPadReceiver(serverURL, qr){
+    this.socket = new WebSocket("ws://"+serverURL);
     
     this.id = 0;
     this.url = location.href+"/controller/";
-    this.qr = qr || new Image();
+    this.qr = (function(o){
+        var qr;
+        if(o.jquery){ // is a jquery object
+            qr = o[0];
+        }
+        else if(o.length){ // is a string
+            qr = document.getElementById(o);
+            if(!qr) throw "Undefined id "+o+" for QrCode image";
+        }
+        else if(o.nodeName){ // is really a elem
+            qr = o;
+            if(o.nodeName != "IMG") throw "This's not an image";
+        }
+        else throw "WTF is this shit ?";
+        return qr;
+    })(qr);
     this.qr.onload = this.onload;
     
     this.verbose = true;
@@ -59,7 +73,7 @@ function AirPadReceiver(serverURL, port, qr){
         if(this.id){
             if(!this.qr.src){
                 url = encodeURIComponent(this.url+"?apid="+this.id);
-                this.qr.src = "http://qrickit.com/api/qr?d="+url+"&qrsize=150";
+                this.qr.src = "http://qrickit.com/api/qr?qrsize=150&d="+url;
             }
             return this.qr;
         }

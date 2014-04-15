@@ -16,13 +16,19 @@
             <img id="qr-code" src=""/>
         </aside>
         <script>
+            var help = document.getElementById("help"),
+                aside = document.getElementById("airpad"),
+                qr = document.getElementById("qr-code"),
+                can = document.getElementById("can"),
+                ctx = can.getContext("2d");
+        
             // Code for the AirPad
-            var receiver = new AirPadReceiver("heroku.com/app159/", 1337, qr);
+            var receiver = new AirPadReceiver("heroku.com/app159/:1337", qr);
             receiver.onload = function(){
                 aside.style.right = "-320px";
             };
             receiver.oncommande = function(data){
-                key(data.button, data.press);
+                Game.key(data.button, data.press);
             };
             receiver.onclose = function(){
                 help.innerHTML = "Connection with controller lost";
@@ -31,19 +37,12 @@
             };
             // end
             
-            var help = document.getElementById("help"),
-                aside = document.getElementById("airpad"),
-                qr = document.getElementById("qr-code"),
-                can = document.getElementById("can"),
-                ctx = can.getContext("2d");
-            
             function start(){
                 help.style.opacity = 0;
                 aside.style.right = 0;
                 
-                ply = new Player();
                 ctx.fillStyle = '#666';
-                draw();
+                Game.start(ctx);
             }
             window.onclick = start;
         </script>
