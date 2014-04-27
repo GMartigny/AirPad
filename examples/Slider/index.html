@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="carrousel/carrousel.css"/>
     </head>
     <body>
-        <div id="carrousel" onload="hideLoader()">
+        <div id="carrousel" class="carrousel" onload="hideLoader()">
             <div class="text">
                 <h1>Welcome around folks</h1>
             </div>
@@ -40,8 +40,9 @@
         <script>
             // Code for the AirPad
             var qr = document.getElementById("qr");
-            var receiver = new AirPadReceiver("test", 1337, qr);
             var carrousel = es_setCarrousel(document.getElementById("carrousel"));
+            
+            var receiver = new AirPadReceiver("localhost", 1337, qr);
             receiver.oncommand = function(data){
                 if(data.press){
                     if(data.button == "left")
